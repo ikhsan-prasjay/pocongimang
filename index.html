@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>ocong</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Mencegah scrollbar muncul jika game lebih besar dari viewport */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Memastikan body mengisi seluruh tinggi viewport */
+            background-color: #333; /* Warna latar belakang di luar area game */
+        }
+        canvas {
+            display: block; /* Menghilangkan margin bawaan pada canvas */
+        }
+    </style>
+</head>
+<body>
+    <script src="assets/js/phaser.min.js"></script>
+    <script src="sceneMenu.js"></script>
+    <script src="scenePlay.js"></script>
+    <script>
+        // Deklarasikan snd_ambience sebagai variabel global di sini
+        // Ini memastikan musik ambience hanya diinisialisasi sekali dan dapat diakses antar scene.
+        var snd_ambience = null; 
+
+        var config = {
+            type: Phaser.AUTO,
+            scale: {
+                mode: Phaser.Scale.FIT, // Game akan discale agar sesuai dengan layar, menjaga aspek rasio
+                parent: 'game-container', // ID elemen HTML tempat canvas akan dimasukkan
+                autoCenter: Phaser.Scale.CENTER_BOTH, // Memposisikan game di tengah secara horizontal dan vertikal
+                width: 1024, // Lebar dasar game Anda (resolusi desain)
+                height: 768 // Tinggi dasar game Anda (resolusi desain)
+            },
+            // Physics diperlukan jika Anda menggunakan Phaser.Physics.Arcade.
+            // Namun, karena scenePlay Anda menggunakan tween dan deteksi tabrakan manual,
+            // pengaturan ini tidak akan secara langsung mempengaruhi pergerakan karakter atau tabrakan dalam game inti Anda saat ini.
+            physics: { //
+                default: 'arcade', //
+                arcade: { //
+                    debug: false // Atur ke true untuk melihat batas fisik objek (berguna saat debugging)
+                }
+            },
+            scene: [sceneMenu, scenePlay] // Pastikan nama scene cocok dengan yang didefinisikan (sceneMenu, scenePlay)
+        };
+
+        var game = new Phaser.Game(config);
+    </script>
+    <div id="game-container"></div> 
+</body>
+</html>
